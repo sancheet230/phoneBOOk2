@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Register</title>
+
+    <!-- Google Font Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS (for utility-based styling) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-100 font-poppins flex justify-center items-center min-h-screen">
+
+    <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-8">
+        <div class="text-center mb-6">
+            <h1 class="text-3xl font-semibold text-gray-800">Welcome to Phonebook</h1>
+        </div>
+
+        <div id="loginForm" class="space-y-6">
+            <div>
+                <label for="loginUsername" class="block text-sm text-gray-700">Username</label>
+                <input type="text" id="loginUsername" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required />
+            </div>
+            <div>
+                <label for="loginPassword" class="block text-sm text-gray-700">Password</label>
+                <input type="password" id="loginPassword" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required />
+            </div>
+
+            <button onclick="login()" class="w-full py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">Login</button>
+
+            <div class="text-center mt-4">
+                <span>Don't have an account?</span>
+                <button onclick="showRegisterForm()" class="text-blue-600 hover:text-blue-700">Register</button>
+            </div>
+        </div>
+
+        <div id="registerForm" class="space-y-6 hidden">
+            <div>
+                <label for="registerUsername" class="block text-sm text-gray-700">Username</label>
+                <input type="text" id="registerUsername" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required />
+            </div>
+            <div>
+                <label for="registerPassword" class="block text-sm text-gray-700">Password</label>
+                <input type="password" id="registerPassword" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required />
+            </div>
+
+            <button onclick="register()" class="w-full py-3 bg-green-600 text-white rounded-md hover:bg-green-700 transition">Register</button>
+
+            <div class="text-center mt-4">
+                <span>Already have an account?</span>
+                <button onclick="showLoginForm()" class="text-blue-600 hover:text-blue-700">Login</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="login_register.js"></script>
+</body>
+</html>

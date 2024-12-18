@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phonebook App</title>
+
+    <!-- Tailwind CSS (for utility-based styling) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Font Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-100 font-poppins">
+
+    <!-- Phonebook Container -->
+    <div class="max-w-4xl mx-auto mt-10 bg-white p-8 rounded-lg shadow-lg">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-3xl font-semibold text-gray-800">Phonebook App</h1>
+            <button onclick="logout()" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition">Logout</button>
+        </div>
+
+        <div class="mb-6">
+            <button onclick="showAddContactModal()" class="w-full py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">+ Add New Contact</button>
+        </div>
+
+        <!-- Contacts List -->
+        <div id="contactList" class="space-y-4">
+            <!-- Dynamic contact list goes here -->
+        </div>
+    </div>
+
+    <!-- Add/Edit Contact Modal -->
+    <div id="addContactModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center hidden">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-96">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Add New Contact</h2>
+            <form id="addContactForm" class="space-y-4">
+                <input type="text" id="contactName" placeholder="Name" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required />
+                <input type="text" id="contactNumber" placeholder="Phone Number" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required />
+                
+                <!-- Limited Categories Dropdown -->
+                <select id="contactCategory" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    <option value="Friend">Friend</option>
+                    <option value="Family">Family</option>
+                    <option value="Work">Work</option>
+                    <option value="Others">Others</option>
+                </select>
+
+                <!-- Favorite Checkbox -->
+                <label class="inline-flex items-center space-x-2">
+                    <input type="checkbox" id="contactFavorite" class="form-checkbox" />
+                    <span>Favorite</span>
+                </label>
+
+                <!-- Profile Picture -->
+                <input type="file" id="contactPhoto" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" accept="image/*" />
+
+                <div class="flex justify-between">
+                    <button type="button" onclick="closeAddContactModal()" class="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Save Contact</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
