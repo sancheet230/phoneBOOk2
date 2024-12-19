@@ -26,7 +26,7 @@ function displayContacts() {
                 </div>
                 <div class="ml-auto flex items-center space-x-2">
                     <span class="text-yellow-500">${contact.isFavorite ? '★' : '☆'}</span>
-                    <button onclick="editContact(${contact.id})" class="px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">Edit</button>
+                    <button onclick="showAddContactModal(${contact.id})" class="px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">Edit</button>
                     <button onclick="removeContact(${contact.id})" class="px-3 py-1 bg-red-600 text-white rounded-md hover:bg-red-700 transition">Delete</button>
                 </div>
             </div>
@@ -43,28 +43,28 @@ function removeContact(contactId) {
     displayContacts();
 }
 
-// Show "Add New Contact" modal
+// Show "Add/Edit Contact" modal
 function showAddContactModal(contactId = null) {
     // Reset the form before opening
     document.getElementById('contactName').value = '';
     document.getElementById('contactNumber').value = '';
     document.getElementById('contactCategory').value = 'Friend';
     document.getElementById('contactFavorite').checked = false;
-    document.getElementById('contactPhoto').value = '';  // Clear photo input
+    document.getElementById('contactPhoto').value = ''; // Clear photo input
 
     // Check if editing an existing contact
     if (contactId) {
         const contacts = JSON.parse(localStorage.getItem('contacts')) || [];
         const contact = contacts.find(contact => contact.id === contactId);
 
-        // Pre-fill the modal form with the contact details
-        document.getElementById('contactName').value = contact.name;
-        document.getElementById('contactNumber').value = contact.number;
-        document.getElementById('contactCategory').value = contact.category;
-        document.getElementById('contactFavorite').checked = contact.isFavorite;
-
-        // Set the form's data-contact-id to the current contact id
-        document.getElementById('addContactForm').setAttribute('data-contact-id', contact.id);
+        if (contact) {
+            // Pre-fill the modal form with the contact details
+            document.getElementById('contactName').value = contact.name;
+            document.getElementById('contactNumber').value = contact.number;
+            document.getElementById('contactCategory').value = contact.category;
+            document.getElementById('contactFavorite').checked = contact.isFavorite;
+            document.getElementById('addContactForm').setAttribute('data-contact-id', contact.id);
+        }
     } else {
         // Clear the form if it's a new contact
         document.getElementById('addContactForm').removeAttribute('data-contact-id');
@@ -74,7 +74,7 @@ function showAddContactModal(contactId = null) {
     document.getElementById('addContactModal').classList.remove('hidden');
 }
 
-// Close "Add New Contact" modal
+// Close "Add/Edit Contact" modal
 function closeAddContactModal() {
     document.getElementById('addContactModal').classList.add('hidden');
 }
@@ -100,16 +100,18 @@ document.getElementById('addContactForm').addEventListener('submit', function (e
     // Check if editing an existing contact
     const existingContactId = document.getElementById('addContactForm').getAttribute('data-contact-id');
     if (existingContactId) {
-        contactId = existingContactId;
-        const index = contacts.findIndex(contact => contact.id == existingContactId);
-        contacts[index] = {
-            id: contactId,
-            name,
-            number,
-            category,
-            isFavorite,
-            photoURL: photo ? URL.createObjectURL(photo) : contacts[index].photoURL
-        };
+        contactId = parseInt(existingContactId, 10);
+        const index = contacts.findIndex(contact => contact.id === contactId);
+        if (index > -1) {
+            contacts[index] = {
+                id: contactId,
+                name,
+                number,
+                category,
+                isFavorite,
+                photoURL: photo ? URL.createObjectURL(photo) : contacts[index].photoURL
+            };
+        }
     } else {
         // Add new contact
         contacts.push({
@@ -132,8 +134,3 @@ function logout() {
     localStorage.removeItem('loggedInUser');
     window.location.href = 'login_register.html';
 }
-
-
-
-
-
