@@ -4,16 +4,22 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = 'login_register.html'; // Redirect to login if not logged in
     } else {
         displayContacts();
+        setupSearchFunctionality();
     }
 });
 
 // Display contacts from localStorage
-function displayContacts() {
+function displayContacts(searchQuery = '') {
     const contacts = JSON.parse(localStorage.getItem('contacts')) || [];
     const contactList = document.getElementById('contactList');
     contactList.innerHTML = '';
 
-    contacts.forEach((contact) => {
+    const filteredContacts = contacts.filter(contact => 
+        contact.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        contact.number.includes(searchQuery)
+    );
+
+    filteredContacts.forEach((contact) => {
         const contactItem = document.createElement('div');
         contactItem.classList.add('p-4', 'border', 'rounded-lg', 'shadow-sm', 'bg-gray-50');
         contactItem.innerHTML = `
@@ -35,6 +41,15 @@ function displayContacts() {
     });
 }
 
+// Search functionality
+function setupSearchFunctionality() {
+    const searchBox = document.getElementById('searchBox');
+    searchBox.addEventListener('input', (event) => {
+        const searchQuery = event.target.value;
+        displayContacts(searchQuery);
+    });
+}
+
 // Remove contact by ID
 function removeContact(contactId) {
     const contacts = JSON.parse(localStorage.getItem('contacts')) || [];
@@ -45,20 +60,12 @@ function removeContact(contactId) {
 
 // Show "Add/Edit Contact" modal
 function showAddContactModal(contactId = null) {
-    // Reset the form before opening
-    document.getElementById('contactName').value = '';
-    document.getElementById('contactNumber').value = '';
-    document.getElementById('contactCategory').value = 'Friend';
-    document.getElementById('contactFavorite').checked = false;
-    document.getElementById('contactPhoto').value = ''; // Clear photo input
+    document.getElementById('addContactForm').reset(); // Reset the form before opening
 
-    // Check if editing an existing contact
     if (contactId) {
         const contacts = JSON.parse(localStorage.getItem('contacts')) || [];
         const contact = contacts.find(contact => contact.id === contactId);
-
         if (contact) {
-            // Pre-fill the modal form with the contact details
             document.getElementById('contactName').value = contact.name;
             document.getElementById('contactNumber').value = contact.number;
             document.getElementById('contactCategory').value = contact.category;
@@ -66,11 +73,9 @@ function showAddContactModal(contactId = null) {
             document.getElementById('addContactForm').setAttribute('data-contact-id', contact.id);
         }
     } else {
-        // Clear the form if it's a new contact
         document.getElementById('addContactForm').removeAttribute('data-contact-id');
     }
 
-    // Show the modal
     document.getElementById('addContactModal').classList.remove('hidden');
 }
 
@@ -95,9 +100,8 @@ document.getElementById('addContactForm').addEventListener('submit', function (e
     }
 
     const contacts = JSON.parse(localStorage.getItem('contacts')) || [];
-    let contactId = new Date().getTime(); // Default for new contact
+    let contactId = new Date().getTime();
 
-    // Check if editing an existing contact
     const existingContactId = document.getElementById('addContactForm').getAttribute('data-contact-id');
     if (existingContactId) {
         contactId = parseInt(existingContactId, 10);
@@ -113,7 +117,6 @@ document.getElementById('addContactForm').addEventListener('submit', function (e
             };
         }
     } else {
-        // Add new contact
         contacts.push({
             id: contactId,
             name,
@@ -125,11 +128,11 @@ document.getElementById('addContactForm').addEventListener('submit', function (e
     }
 
     localStorage.setItem('contacts', JSON.stringify(contacts));
-    displayContacts(); // Update contact list after adding/editing the contact
-    closeAddContactModal(); // Close modal after saving the contact
+    displayContacts();
+    closeAddContactModal();
 });
 
-// Logout user and clear session
+// Logout user
 function logout() {
     localStorage.removeItem('loggedInUser');
     window.location.href = 'login_register.html';
