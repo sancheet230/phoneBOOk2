@@ -31,6 +31,10 @@
         <div class="mb-6">
             <button onclick="showAddContactModal()" class="w-full py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">+ Add New Contact</button>
         </div>
+        <div class="mb-4">
+            <input id="searchBox" type="text" placeholder="Search contacts..." class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+        <div id="contactList" class="space-y-4"></div>
 
         <!-- Contacts List -->
         <div id="contactList" class="space-y-4">
@@ -43,8 +47,8 @@
         <div class="bg-white p-8 rounded-lg shadow-lg w-96">
             <h2 class="text-2xl font-semibold text-gray-800 mb-4">Add New Contact</h2>
             <form id="addContactForm" class="space-y-4">
-                <input type="text" id="contactName" placeholder="Name" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required />
-                <input type="text" id="contactNumber" placeholder="Phone Number" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required />
+                <input type="text" id="contactName" placeholder="Name" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" required />
+                <input type="text" id="contactNumber" placeholder="Phone Number" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" required />
                 
                 <!-- Limited Categories Dropdown -->
                 <select id="contactCategory" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
