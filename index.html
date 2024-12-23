@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phonebook App</title>
+    <title>Modern Phonebook App</title>
 
-    <!-- Tailwind CSS (for utility-based styling) -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Google Font Poppins -->
@@ -14,43 +14,53 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-gray-100 font-poppins">
+<body class="bg-gradient-to-br from-blue-50 to-blue-100 font-poppins min-h-screen flex flex-col items-center">
 
-    <!-- Logo -->
-    <div class="flex justify-center my-4">
-        <img src="logo.png" alt="Logo" class="h-16">
-    </div>
+    <!-- Header Section -->
+    <header class="w-full bg-blue-600 text-white shadow-md">
+        <div class="max-w-6xl mx-auto p-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold">Phonebook App</h1>
+            <button onclick="logout()" class="px-4 py-2 bg-red-500 rounded-md hover:bg-red-600 transition">Logout</button>
+        </div>
+    </header>
 
-    <!-- Phonebook Container -->
-    <div class="max-w-4xl mx-auto mt-10 bg-white p-8 rounded-lg shadow-lg">
+    <!-- Main Content -->
+    <main class="flex-1 w-full max-w-4xl mx-auto mt-8 p-6 bg-white shadow-lg rounded-lg">
+        <!-- Add Contact Button -->
         <div class="flex justify-between items-center mb-6">
-            <h1 class="text-3xl font-semibold text-gray-800">Phonebook App</h1>
-            <button onclick="logout()" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition">Logout</button>
+            <button onclick="showAddContactModal()" class="px-6 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition">+ Add New Contact</button>
+            <input id="searchBox" type="text" placeholder="Search contacts..." class="w-1/2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
         </div>
 
-        <div class="mb-6">
-            <button onclick="showAddContactModal()" class="w-full py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">+ Add New Contact</button>
+        <!-- Contact List Section -->
+        <div id="contactList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Example Contact Card -->
+            <div class="bg-gray-50 p-4 rounded-lg shadow hover:shadow-lg transition relative">
+                <div class="flex items-center space-x-4">
+                    <img src="avatar-placeholder.png" alt="Contact Photo" class="w-12 h-12 rounded-full bg-gray-200">
+                    <div class="flex-1">
+                        <h3 class="text-lg font-semibold">John Doe</h3>
+                        <p class="text-sm text-gray-600">Friend</p>
+                        <p class="text-sm text-gray-800"><strong>Phone:</strong> +1 234 567 890</p>
+                        <p class="text-sm text-gray-800"><strong>Favorite:</strong> Yes</p>
+                    </div>
+                </div>
+                <div class="flex justify-end space-x-2 mt-4">
+                    <button class="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 transition">Edit</button>
+                    <button class="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition">Delete</button>
+                </div>
+            </div>
         </div>
-        <div class="mb-4">
-            <input id="searchBox" type="text" placeholder="Search contacts..." class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
-        </div>
-        <div id="contactList" class="space-y-4"></div>
-
-        <!-- Contacts List -->
-        <div id="contactList" class="space-y-4">
-            <!-- Dynamic contact list goes here -->
-        </div>
-    </div>
+    </main>
 
     <!-- Add/Edit Contact Modal -->
-    <div id="addContactModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center hidden">
+    <div id="addContactModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden">
         <div class="bg-white p-8 rounded-lg shadow-lg w-96">
             <h2 class="text-2xl font-semibold text-gray-800 mb-4">Add New Contact</h2>
             <form id="addContactForm" class="space-y-4">
                 <input type="text" id="contactName" placeholder="Name" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" required />
                 <input type="text" id="contactNumber" placeholder="Phone Number" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" required />
-                
-                <!-- Limited Categories Dropdown -->
+
                 <select id="contactCategory" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                     <option value="Friend">Friend</option>
                     <option value="Family">Family</option>
@@ -58,14 +68,12 @@
                     <option value="Others">Others</option>
                 </select>
 
-                <!-- Favorite Checkbox -->
                 <label class="inline-flex items-center space-x-2">
-                    <input type="checkbox" id="contactFavorite" class="form-checkbox" />
+                    <input type="checkbox" id="contactFavorite" class="form-checkbox">
                     <span>Favorite</span>
                 </label>
 
-                <!-- Profile Picture -->
-                <input type="file" id="contactPhoto" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" accept="image/*" />
+                <input type="file" id="contactPhoto" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" accept="image/*">
 
                 <div class="flex justify-between">
                     <button type="button" onclick="closeAddContactModal()" class="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700">Cancel</button>
@@ -75,6 +83,7 @@
         </div>
     </div>
 
+    <!-- Custom JavaScript -->
     <script src="script.js"></script>
 </body>
 </html>
